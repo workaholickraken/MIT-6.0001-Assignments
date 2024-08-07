@@ -1,17 +1,17 @@
-annual_return = 0.04
+annual_salary = int(input("Enter your annual salary: "))
+portion_saved = float(input("Enter the percent of your salary to save, as a decimal: "))
+total_cost = int(input("Enter the cost of your dream home: "))
 current_savings = 0.0
-number_of_months = 0
-
-annual_salary = float(input('Enter your annual salary: '))
-portion_saved = float(input('Enter the percent of your salary to save, as a decimal: '))
-monthly_savings = (annual_salary / 12) * portion_saved
-
-total_cost = float(input('Enter the cost of your dream home: '))
-portion_down_payment = 0.25
-down_payment = total_cost * portion_down_payment
+r = 0.04
+months = 0
+down_payment = 0.25 * total_cost
+monthly_salary = annual_salary / 12
+monthly_savings = portion_saved * monthly_salary
 
 while current_savings < down_payment:
-    current_savings += monthly_savings + ((current_savings * annual_return) / 12)
-    number_of_months += 1
+    ROI = current_savings * r / 12
+    current_savings += ROI + monthly_savings
+    months += 1
 
-print('Number of months: {}'.format(number_of_months))
+print(current_savings >= down_payment)
+print("Number of months:", months)
