@@ -1,7 +1,7 @@
 # Problem Set 2, hangman.py
-# Name: 
-# Collaborators:
-# Time spent:
+# Name:Workaholickraken
+# Collaborators:none
+# Time spent: A LOT
 
 # Hangman Game
 # -----------------------------------
@@ -59,9 +59,18 @@ def is_word_guessed(secret_word, letters_guessed):
       assumes that all letters are lowercase
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
+    
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+
+    for letter in secret_word:
+      if letter not in letters_guessed:
+        return False
+        
+    return False
+      
+
+    
 
 
 
@@ -73,7 +82,14 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    x=''
+    for letter in secret_word:
+      if letter in letters_guessed :
+        x+=letter
+      else :
+        x+='_ '
+    return x
+    
 
 
 
@@ -84,7 +100,12 @@ def get_available_letters(letters_guessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    the_list=''
+    for letter in string.ascii_lowercase:
+      if  letter not in letters_guessed:
+        the_list+=letter
+    return the_list
+    
     
     
 
@@ -114,7 +135,92 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    print("Welcome to the game, Hangman!")
+    print("I am thinking of a word that is", len(secret_word), "letters long.")
+    
+    vowels=['a','e','i','o','u']
+    consonants=['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z']
+    
+    letters_guessed=[]
+    warnings=3
+    guess=6
+    
+    
+    while guess>0:
+      
+      print("----------------")
+      print('You have '+ str(guess) +' guesses left. ')
+      print('Available letters:'+ get_available_letters(letters_guessed) )
+      
+      letter=input("Please guess a letter:").lower()
+    
+     
+        
+      
+      if str.isalpha(letter)==False:
+        
+        if warnings ==0:
+          guess-=1 
+          print('Oops! That is not a valid letter. You have no warnings left so you lose one guess:', get_guessed_word(secret_word, letters_guessed))
+        else :
+          print('Oops! That is not a valid letter. You have '+ str(warnings) +' warnings left:', get_guessed_word(secret_word, letters_guessed))
+          warnings-=1
+      
+      
+      elif letter in letters_guessed:
+          guess-=1
+          print("Oops! You've already guesssed this letter.Try again. ")
+          
+      elif letter in secret_word:
+          letters_guessed.append(letter)
+
+          print("Good guess:"+ get_guessed_word(secret_word,letters_guessed)) 
+      else:
+          letters_guessed.append(letter)
+          print("Oops! That letter is not in my word:"+ get_guessed_word(secret_word,letters_guessed))  
+          if letter in vowels:
+            guess-=2
+          else: guess-=1       
+
+  
+      if is_word_guessed(secret_word, letters_guessed):
+          print("Congratulations, you won!")
+          s=secret_word
+          r=[]
+          count=0
+          for char in s:
+            
+            if char == s[i]:
+              count+=1
+              
+              if count==2:
+                r.append(char)
+                break
+              else: 
+                i+=1  
+          total_score=guess*(len(secret_word)-len(r))
+          print("Your total score for this game is:", total_score)
+          break
+        
+          
+       
+         
+   
+    if guess == 0:
+        print('Sorry, you ran out of guesses. The word was', secret_word)
+
+
+
+
+
+
+
+
+      
+
+
+
+    
 
 
 
@@ -201,7 +307,10 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
+   # secret_word = choose_word(wordlist)
+    #hangman(secret_word)
+    
+    secret_word = 'tact'
     hangman(secret_word)
 
 ###############
